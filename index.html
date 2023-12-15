@@ -1,58 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Barcode Scanner</title>
-  <script src="https://cdn.rawgit.com/serratus/quaggaJS/master/dist/quagga.min.js"></script>
+  <title>Leitor de código de barras</title>
 </head>
 <body>
-  <h1>Barcode Scanner</h1>
-  <div id="interactive" class="viewport"></div>
-
-  <script>
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      // Defina as configurações do leitor de códigos de barras
-      const config = {
-        inputStream: {
-          name: "Live",
-          type: "LiveStream",
-          target: document.querySelector("#interactive"),
-          constraints: {
-            width: 640,
-            height: 480,
-            facingMode: "environment" // Use a câmera traseira
-          },
-        },
-        locator: {
-          patchSize: "medium",
-          halfSample: true,
-        },
-        numOfWorkers: 2,
-        frequency: 10,
-        decoder: {
-          readers: ["ean_reader"]
-        },
-        locate: true,
-      };
-
-      Quagga.init(config, (err) => {
-        if (err) {
-          console.error(err);
-          return;
-        }
-
-        Quagga.start();
-      });
-
-      Quagga.onDetected((result) => {
-        const code = result.codeResult.code;
-        alert(`Código de barras detectado: ${code}`);
-        Quagga.stop();
-      });
-    } else {
-      alert("O seu navegador não suporta a API de mídia necessária para esta aplicação.");
-    }
-  </script>
+  <div id="codigo"></div>
+  <button id="ler">Ler código</button>
 </body>
 </html>
+
+<script>
+  const codigo = document.querySelector("#codigo");
+const ler = document.querySelector("#ler");
+
+async function lerCodigo() {
+  // Obtém o detector de código de barras do navegador
+  const detector = await navigator.mediaDevices.getUserMedia({
+    video: true,
+  });
+
+  // Inicia o detector
+  const scanner = new BarcodeScanner(detector);
+
+  // Aguarda o código de barras ser detectado
+  const resultado = await scanner.scan();
+
+  // Fecha o detector
+  detector.release();
+
+  // Exibe o código de barras na tela
+  codigo.textContent = resultado.code;
+
+  // Exibe o código de barras em um alerta
+  alert(resultado.code);
+}
+
+ler.addEventListener("click", lerCodigo);
+
+</script>
+
+<script>
+  const scanner = new BarcodeScanner();
+
+async function lerCodigo() {
+  // Obtém o código de barras
+  const resultado = await scanner.scan();
+
+  // Exibe o código de barras na tela
+  codigo.textContent = resultado.code;
+
+  // Exibe o código de barras em um alerta
+  alert(resultado.code);
+}
+
+ler.addEventListener("click", lerCodigo);
+
+</script>
