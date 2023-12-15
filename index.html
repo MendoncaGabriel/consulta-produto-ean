@@ -5,16 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scanner de Código de Barras</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-        }
 
         #code {
             text-align: center;
@@ -22,6 +12,8 @@
         }
 
         #camera {
+            margin: auto;
+            overflow: hidden;
             width: 100%;
             max-width: 600px;
             border: 2px solid #333;
@@ -29,8 +21,8 @@
     </style>
 </head>
 <body>
-    <h1 id="code">Código de Barras</h1>
     <div id="camera"></div>
+    <h1 id="code">Código de Barras</h1>
 
     <script src="quagga.min.js"></script>
     <script>
