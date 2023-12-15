@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +9,8 @@
     #barcode-scanner {
       width: 100%;
       height: 100vh;
-      border: 2px solid black
+      border: 2px solid;
+      height: 300px;
     }
   </style>
 </head>
@@ -16,25 +18,7 @@
 
   <div id="barcode-scanner"></div>
 
-  <script src="https://cdn.jsdelivr.net/npm/quagga@0.12.1/dist/quagga.min.js"></script>
-  <script>
-    Quagga.init({
-      inputStream: {
-        name: 'Live',
-        type: 'LiveStream',
-        target: document.querySelector('#barcode-scanner'),
-      },
-      decoder: {
-        readers: ['ean_reader']
-      }
-    });
-
-    Quagga.onDetected(result => {
-      alert('Código de barras detectado:', result.codeResult.code);
-    });
-
-    Quagga.start();
-  </script>
+  <script type="module src="barcode-scanner.js"></script>
 
 </body>
 </html>

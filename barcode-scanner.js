@@ -1,3 +1,4 @@
+// barcode-scanner.js
 const Quagga = require('quagga');
 
 Quagga.init({
@@ -12,7 +13,7 @@ Quagga.init({
 });
 
 Quagga.onDetected(result => {
-  console.log('Código de barras detectado:', result.codeResult.code);
+  alert('Código de barras detectado:', result.codeResult.code);
 });
 
 Quagga.start();
