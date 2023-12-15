@@ -5,47 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<style>
-    #yourElement{
-        border: 2px solid;
-        width: 400px;
-        margin: auto;
-        height: 200px;
-    }
-</style>
 <body>
-    <div id="yourElement"></div>
-    <h1 id="code" style="text-align: center;">codigo de barras</h1>
+    <div id="camera"></div>
 </body>
 </html>
 
-<!-- Inclua o QuaggaJS -->
-<script src="https://cdn.jsdelivr.net/npm/quagga"></script>
-
-<!-- Seu código JavaScript -->
+<script src="quagga.min.js"></script>
 <script>
-Quagga.init({
-    inputStream: {
-        name: "Live",
-        type: "LiveStream",
-        target: document.querySelector('#yourElement')
-    },
-    decoder: {
-        readers: ["code_128_reader"]
-    }
-}, function (err) {
-    if (err) {
-        console.log(err);
-        return;
-    }
-    console.log("Initialization finished. Ready to start");
-
-    Quagga.onDetected(function (result) {
-        // A função de retorno de chamada é chamada quando um código de barras é detectado
-        var code = result.codeResult.code;
-        document.getElementById('code').innerText = code;
+    Quagga.init({
+        inputStream : {
+        name : "Live",
+        type : "LiveStream",
+        target: document.querySelector('#camera')    // Or '#yourElement' (optional)
+        },
+        decoder : {
+        readers : ["code_128_reader"]
+        }
+    }, function(err) {
+        if (err) {
+            console.log(err);
+            return
+        }
+        console.log("Initialization finished. Ready to start");
+        Quagga.start();
     });
 
-    Quagga.start();
-})
+    Quagga.onDetected((data)=>{
+        alert(data)
+    })
 </script>
