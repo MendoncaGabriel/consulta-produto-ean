@@ -1,66 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scanner de Código de Barras</title>
-    <style>
+<link rel="stylesheet" href="style.css" />
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="barcode.js"></script>
 
-        #code {
-            text-align: center;
-            margin-top: 20px;
-        }
+<script type="text/javascript">
 
-        #camera {
-            margin: auto;
-            overflow: hidden;
-            width: 100%;
-            max-width: 600px;
-            border: 2px solid #333;
-        }
-    </style>
+var sound = new Audio("barcode.wav");
+
+$(document).ready(function() {
+
+	barcode.config.start = 0.1;
+	barcode.config.end = 0.9;
+	barcode.config.video = '#barcodevideo';
+	barcode.config.canvas = '#barcodecanvas';
+	barcode.config.canvasg = '#barcodecanvasg';
+	barcode.setHandler(function(barcode) {
+		$('#result').html(barcode);
+	});
+	barcode.init();
+
+	$('#result').bind('DOMSubtreeModified', function(e) {
+		sound.play();	
+	});
+
+});
+
+</script>
+
 </head>
 <body>
-    <div id="camera"></div>
-    <h1 id="code">Código de Barras</h1>
 
-    <script src="quagga.min.js"></script>
-    <script>
-        Quagga.init({
-            inputStream: {
-                name: "Live",
-                type: "LiveStream",
-                target: document.querySelector('#camera'),
-                constraints: {
-                    width: 600,
-                    height: 400,
-                    facingMode: "environment", // Use "user" for front camera
-                },
-            },
-            decoder: {
-                readers: [
-                    "ean_reader", "code_128_reader", "code_39_reader", "codabar_reader",
-                    "upc_reader", "upc_e_reader", "i2of5_reader", "2of5_reader", "code_93_reader"
-                ]
-            },
-            debug: {
-                drawBoundingBox: true,
-                drawScanline: true,
-            },
-        }, function(err) {
-            if (err) {
-                document.getElementById('code').innerText = err;
-                alert(err);
-                return;
-            }
-            console.log("Initialization finished. Ready to start");
-            Quagga.start();
-        });
+<div id="barcode">
+	<video id="barcodevideo" autoplay></video>
+	<canvas id="barcodecanvasg" ></canvas>
+</div>
+<canvas id="barcodecanvas" ></canvas>
+<div id="result"></div>
 
-        Quagga.onDetected((data) => {
-            alert(data.codeResult.code);
-            document.getElementById('code').innerText = data.codeResult.code;
-        });
-    </script>
 </body>
 </html>
