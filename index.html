@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <div id="camera"></div>
 </body>
@@ -19,7 +20,7 @@
         target: document.querySelector('#camera')    // Or '#yourElement' (optional)
         },
         decoder : {
-        readers : ["code_128_reader"]
+        readers : ["ean_reader", "code_128_reader"]
         }
     }, function(err) {
         if (err) {
