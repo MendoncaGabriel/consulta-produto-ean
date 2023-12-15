@@ -1,25 +1,17 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Barcode Scanner</title>
-  <style>
-    #barcode-scanner {
-      width: 100%;
-      height: 100vh;
-      border: 2px solid;
-      height: 300px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leitor de Código de Barras</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-  <div id="barcode-scanner"></div>
-
-  <script type="module" src="barcode-scanner.js"></script>
-
-
+    <div id="barcode-reader">
+        <video id="barcode-video" playsinline></video>
+        <div id="barcode-result"></div>
+    </div>
+    <script src="https://cdn.rawgit.com/serratus/quaggaJS/0.12.1/dist/quagga.min.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
