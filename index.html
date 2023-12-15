@@ -5,8 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-
+<style>
+    #code{
+        text-align: center;
+    }
+    #camera {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        border: 2px solid;
+    }
+</style>
 <body>
+    <h1 id="code">code</h1>
     <div id="camera"></div>
 </body>
 </html>
@@ -15,16 +26,26 @@
 <script>
     Quagga.init({
         inputStream : {
-        name : "Live",
-        type : "LiveStream",
-        target: document.querySelector('#camera')    // Or '#yourElement' (optional)
+            name : "Live",
+            type : "LiveStream",
+            target: document.querySelector('#camera') ,   // Or '#yourElement' (optional)
+            constraints: {
+                width: 600,
+                height: 400,
+                facingMode: "environment", // Use "user" for front camera
+            },
         },
         decoder : {
-        readers : ["ean_reader", "code_128_reader"]
-        }
+            readers : ["ean_reader", "code_128_reader"]
+        },
+        debug: {
+            drawBoundingBox: true,
+            drawScanline: true,
+        },
     }, function(err) {
         if (err) {
-            console.log(err);
+            document.getElementById('code').innerText = err
+            alert(err)
             return
         }
         console.log("Initialization finished. Ready to start");
@@ -33,5 +54,6 @@
 
     Quagga.onDetected((data)=>{
         alert(data.codeResult.code)
+        document.getElementById('code').innerText = data.codeResult.code
     })
 </script>
