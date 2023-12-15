@@ -46,6 +46,8 @@
 
 <body>
     <div id="interactive" class="viewport"></div>
+    <br><br>
+    <h1 id="code">code</h1>
     <script src="quagga.min.js" type="text/javascript"></script>
 </body>
 
@@ -114,6 +116,7 @@
     //Essa Funcão é chamada quando um código de barra válido é detetado
     Quagga.onDetected(function (result) {
         var code = result.codeResult.code;
+        document.getElementById('code').innerText = code
         var linhadigitavel = RetornarLinhaDigitavel(code)
         if (linhadigitavel.includes('boleto')) {
             return
