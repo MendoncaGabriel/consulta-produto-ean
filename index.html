@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barcode Scanner</title>
+  <style>
+    #barcode-scanner {
+      width: 100%;
+      height: 100vh;
+      border: 2px solid black
+    }
+  </style>
+</head>
+<body>
+
+  <div id="barcode-scanner"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/quagga@0.12.1/dist/quagga.min.js"></script>
+  <script>
+    Quagga.init({
+      inputStream: {
+        name: 'Live',
+        type: 'LiveStream',
+        target: document.querySelector('#barcode-scanner'),
+      },
+      decoder: {
+        readers: ['ean_reader']
+      }
+    });
+
+    Quagga.onDetected(result => {
+      alert('Código de barras detectado:', result.codeResult.code);
+    });
+
+    Quagga.start();
+  </script>
+
+</body>
+</html>
